@@ -1,0 +1,25 @@
+{
+  "name": "demoblazedemo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Envymeee/demoblazedemo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Envymeee/demoblazedemo/issues"
+  },
+  "homepage": "https://github.com/Envymeee/demoblazedemo#readme",
+  "dependencies": {
+    "cypress": "^12.8.0"
+  },
+  "devDependencies": {
+    "@cypress/xpath": "^2.0.3"
+  }
+}
