@@ -132,7 +132,7 @@ describe('DemoBlazeDemo', () => {
   })
 
   //Checking out the cart
-  it('Checkout out the cart', () => {
+  it('Checking out the cart', () => {
     //Click Cart
     cy.get('#cartur').click()
     //Click Place Order
