@@ -1,5 +1,5 @@
 require('@cypress/xpath')
-
+let WebWaitDelay = 3000
 describe('Register', () => {
   beforeEach(() => {
       cy.viewport(1920, 1080)
@@ -8,12 +8,13 @@ describe('Register', () => {
   })
 //Signup
   it('Register Sign Up', () => {
-    cy.get('#signin2.nav-link').click() 
-    cy.get('#sign-username').should('be.visible').wait(1000).type('BoldrDemoasd1231232131211322') //Change if you want a new user or existing user
+    cy.get('#signin2.nav-link').click({force : true})
+    cy.wait(WebWaitDelay)
+    cy.get('#sign-username').should('be.visible').wait(WebWaitDelay).type('BoldrDemoasd1231232131211322') //Change if you want a new user or existing user
     cy.get('#sign-password').type('DemoblazeBoldrDemo123')
     cy.xpath('/html/body/div[2]/div/div/div[3]/button[2]').should('be.visible').click({force : true})
     // Listen for the window:alert event
-    cy.wait(2000)
+    cy.wait(WebWaitDelay)
     cy.on('window:alert', (alertText) => {
     // Get the alert message and assert on it
     //If sign up is succcessful
@@ -28,7 +29,28 @@ describe('Register', () => {
     }
     cy.window().then(win => {
       win.confirm() // simulate clicking "OK"
+      })
     })
+  })
+    
+  it('Test Login Error', () =>
+  {
+    cy.get('#login2.nav-link').click() 
+    cy.get('#loginusername.form-control').should('be.visible').wait(WebWaitDelay).type('BoldrDemo')
+    cy.get('#loginpassword').type('WRONGPASSWORD')
+    //cy.xpath("/html/body/div[2]/div/div/div[3]/button[2]").click({force: true})
+    cy.get('#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary').click({force : true})
+    cy.wait(WebWaitDelay)//Adjust for server lag
+
+    cy.on('window:alert', (alertText) => {
+      // Get the alert message and assert on it
+      
+      //If sign up is succcessful
+      expect(alertText).to.equal('Wrong password.')
+      
+      cy.window().then(win => {
+        win.confirm() // simulate clicking "OK"
+      })
     })
     
   })
@@ -47,9 +69,9 @@ describe('DemoBlazeDemo', () => {
     cy.get('#login2.nav-link').click() 
     cy.get('#loginusername.form-control').should('be.visible').wait(1000).type('BoldrDemo')
     cy.get('#loginpassword').type('DemoblazeBoldrDemo123')
-    cy.xpath("/html/body/div[2]/div/div/div[3]/button[2]").click({force: true})
+    //cy.xpath("/html/body/div[2]/div/div/div[3]/button[2]").click({force: true})
     cy.get('#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary').click({force : true})
-    cy.wait(3000)//Adjust for server lag
+    cy.wait(WebWaitDelay)//Adjust for server lag
   })
 
 //login
@@ -62,7 +84,7 @@ describe('DemoBlazeDemo', () => {
   it('Adding to cart an item', () => {
     cy.get(':nth-child(1) > .card > :nth-child(1) > .card-img-top').should('be.visible', {timeout: 10000}).click()
     cy.get('.col-sm-12 > .btn').should('be.visible', {timeout: 10000}).click()
-    cy.wait(3000)// Adjust for server lag
+    cy.wait(WebWaitDelay)// Adjust for server lag
     // Listen for the window:alert event
     cy.on('window:alert', (message) => {
       // Get the alert message and assert on it
