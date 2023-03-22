@@ -16,7 +16,7 @@ describe('DemoBlazeDemo', () => {
     cy.on('window:alert', (message) => {
     // Get the alert message and assert on it
     expect(message).to.equal('This user already exist.') //Alert on already existing accounts
-
+    
     })
   })
 
