@@ -32,8 +32,25 @@ describe('Register', () => {
       })
     })
   })
+  
+  it('Register Sign Up NO inputs', () => {
+    cy.get('#signin2.nav-link').click({force : true})
+    cy.wait(WebWaitDelay)
+    cy.xpath('/html/body/div[2]/div/div/div[3]/button[2]').should('be.visible').click({force : true})
+    // Listen for the window:alert event
+    cy.wait(WebWaitDelay)
+    cy.on('window:alert', (alertText) => {
+    // Get the alert message and assert on it
+    //No inputs
+    expect(alertText).to.equal('Please fill out Username and Password.')
     
-  it('Test Login Error', () =>
+    cy.window().then(win => {
+      win.confirm() // simulate clicking "OK"
+      })
+    })
+  })
+
+  it('Test Login Error WRONG PASSWORD', () =>
   {
     cy.get('#login2.nav-link').click() 
     cy.get('#loginusername.form-control').should('be.visible').wait(WebWaitDelay).type('BoldrDemo')
@@ -54,8 +71,25 @@ describe('Register', () => {
     })
     
   })
+  //No inputs just clicks sign in
+  it('No Inputs Log In', () =>
+  {
+    cy.get('#login2.nav-link').click() 
+    //cy.xpath("/html/body/div[2]/div/div/div[3]/button[2]").click({force: true})
+    cy.get('#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary').click({force : true})
+    cy.wait(WebWaitDelay)//Adjust for server lag
 
-
+    cy.on('window:alert', (alertText) => {
+      // Get the alert message and assert on it
+      
+      //If sign up is succcessful
+      expect(alertText).to.equal('Please fill out Username and Password.')
+      
+      cy.window().then(win => {
+        win.confirm() // simulate clicking "OK"
+      })
+    })
+  })
   
 })
 
