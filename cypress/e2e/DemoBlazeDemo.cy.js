@@ -145,7 +145,7 @@ describe('DemoBlazeDemo', () => {
     cy.get('#month').should('be.visible').type('March 15')
     cy.get('#year').should('be.visible').type('2023')
 
-    cy.xpath('/html/body/div[3]/div/div/div[3]/button[2]').click()
+    cy.xpath('/html/body/div[3]/div/div/div[3]/button[2]').click() //Clicks purchase
     cy.get('.sweet-alert > h2').should('have.text', 'Thank you for your purchase!') 
   })
 
