@@ -152,7 +152,7 @@ describe('DemoBlazeDemo', () => {
   it('Sign out', () => {
     //Assert if Logged in
     cy.get('#logout2').should('have.text', 'Log out').click({force : true})
-    cy.get('#signin2.nav-link')
+    cy.get('#signin2.nav-link') //Asserts if sign in button is visible
   })
 
   
