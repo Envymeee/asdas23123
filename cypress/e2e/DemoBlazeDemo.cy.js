@@ -9,20 +9,34 @@ describe('Register', () => {
 //Signup
   it('Register Sign Up', () => {
     cy.get('#signin2.nav-link').click() 
-    cy.get('#sign-username').should('be.visible').wait(1000).type('BoldrDemo')
+    cy.get('#sign-username').should('be.visible').wait(1000).type('BoldrDemoasd1231232131211322') //Change if you want a new user or existing user
     cy.get('#sign-password').type('DemoblazeBoldrDemo123')
     cy.xpath('/html/body/div[2]/div/div/div[3]/button[2]').should('be.visible').click({force : true})
     // Listen for the window:alert event
-    cy.on('window:alert', (message) => {
+    cy.wait(2000)
+    cy.on('window:alert', (alertText) => {
     // Get the alert message and assert on it
-    expect(message).to.equal('This user already exist.') //Alert on already existing accounts
-    
+    //If sign up is succcessful
+    if(alertText == 'Sign up successful.')
+    {
+      expect(alertText).to.equal('Sign up successful.')
+    }
+    //If user already exists
+    if(alertText == 'This user already exist.')
+    {
+      expect(alertText).to.equal('This user already exist.')
+    }
+    cy.window().then(win => {
+      win.confirm() // simulate clicking "OK"
     })
+    })
+    
   })
 
 
   
 })
+
 
 describe('DemoBlazeDemo', () => {
   beforeEach(() => {
@@ -33,9 +47,9 @@ describe('DemoBlazeDemo', () => {
     cy.get('#login2.nav-link').click() 
     cy.get('#loginusername.form-control').should('be.visible').wait(1000).type('BoldrDemo')
     cy.get('#loginpassword').type('DemoblazeBoldrDemo123')
-    //cy.xpath("/html/body/div[2]/div/div/div[3]/button[2]").click({force: true})
+    cy.xpath("/html/body/div[2]/div/div/div[3]/button[2]").click({force: true})
     cy.get('#logInModal > .modal-dialog > .modal-content > .modal-footer > .btn-primary').click({force : true})
-    cy.wait(5000)
+    cy.wait(3000)//Adjust for server lag
   })
 
 //login
@@ -46,9 +60,9 @@ describe('DemoBlazeDemo', () => {
 
 //Adding to cart an item
   it('Adding to cart an item', () => {
-    cy.get(':nth-child(1) > .card > :nth-child(1) > .card-img-top').should('be.visible', {timeout: 10000}).click({force : true})
-    cy.get('.col-sm-12 > .btn').should('be.visible', {timeout: 10000}).click({force : true})
-
+    cy.get(':nth-child(1) > .card > :nth-child(1) > .card-img-top').should('be.visible', {timeout: 10000}).click()
+    cy.get('.col-sm-12 > .btn').should('be.visible', {timeout: 10000}).click()
+    cy.wait(3000)// Adjust for server lag
     // Listen for the window:alert event
     cy.on('window:alert', (message) => {
       // Get the alert message and assert on it
@@ -75,7 +89,7 @@ describe('DemoBlazeDemo', () => {
     cy.get('#month').should('be.visible').type('March 15')
     cy.get('#year').should('be.visible').type('2023')
 
-    cy.xpath('/html/body/div[3]/div/div/div[3]/button[2]').click({force : true})
+    cy.xpath('/html/body/div[3]/div/div/div[3]/button[2]').click()
     cy.get('.sweet-alert > h2').should('have.text', 'Thank you for your purchase!') 
   })
 
